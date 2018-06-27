@@ -33,10 +33,15 @@ def extract():
 <input type="file" name="image">
 <button type="submit">extract feature</button>
 </form>
+<h1>Setup To Search Similar Image</h1>
+<form method="POST" action="/setup">
+<button type="submit">setup</button>
+</form>
 <h1>Search Similar Images Using Gannoy</h1>
 <form method="POST" enctype="multipart/form-data" action="/search">
 <input type="file" name="image">
 <button type="submit">search</button>
+<p>NOTE: Use it after setup.</p>
 </form>
 </body>
 </html>
@@ -78,6 +83,21 @@ def search():
 </html>
 """
     return s.format(query, first, second, third)
+
+@app.route("/setup", methods=['POST'])
+def setup():
+    for path in glob.glob('images/*.jpg'):
+        features = get_feature(open(path, 'rb'))
+        js = jsonify({'features': features.tolist()[0]})
+
+        filename = os.path.basename(path).split('.')[0]
+        file_id = int(filename.split('_')[0])
+
+        registering_url = '{}/databases/table/features/{}'.format(gannoy_host, file_id)
+        requests.put(registering_url,
+                data=json.dumps(js),
+                headers={'content-type': 'application/json'})
+
 
 
 def resolve(id):
