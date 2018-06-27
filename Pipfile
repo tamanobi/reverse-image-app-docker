@@ -8,6 +8,7 @@ tensorflow = "*"
 keras = "*"
 pillow = "!=5.1.0"
 flask = "*"
+requests = "*"
 
 [dev-packages]
 ptpython = "*"
