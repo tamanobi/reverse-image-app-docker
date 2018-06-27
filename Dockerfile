@@ -7,6 +7,7 @@ WORKDIR $project_dir
 ADD Pipfile.lock Pipfile $project_dir
 RUN pipenv install -d
 
-ADD app.py model.py $project_dir
+ADD gannoy.py app.py model.py $project_dir
+RUN mkdir images
 RUN pipenv run python -m model
 CMD pipenv run python app.py
