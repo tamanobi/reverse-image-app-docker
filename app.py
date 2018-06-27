@@ -8,7 +8,6 @@ from PIL import Image
 import glob
 import base64
 import requests
-from gannoy import gannoy_host
 import json
 import os
 
