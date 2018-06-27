@@ -88,7 +88,7 @@ def search():
 def setup():
     for path in glob.glob('images/*.jpg'):
         features = get_feature(open(path, 'rb'))
-        js = jsonify({'features': features.tolist()[0]})
+        js = {'features': features.tolist()[0]}
 
         filename = os.path.basename(path).split('.')[0]
         file_id = int(filename.split('_')[0])
@@ -97,6 +97,7 @@ def setup():
         requests.put(registering_url,
                 data=json.dumps(js),
                 headers={'content-type': 'application/json'})
+    return 'setup done';
 
 
 
